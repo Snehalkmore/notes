@@ -52,7 +52,7 @@ public class Main {
 }
 ```
 
-### Thread class methods
+### Methods
 1. stop() - stop method is used to stop the execution of thread. but it leaves the system in incosistent state because we are not giving chance to rollback or revert the actions. DUe to this it is deprecated.
    
 2. interrupt() - With this method, thread can decide wether they want to interrupt the task. When thread is alive this method return true.
