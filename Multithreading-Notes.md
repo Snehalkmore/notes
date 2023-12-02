@@ -59,13 +59,15 @@ public class Main {
    
 3. interrupted() - this method is used to check the state of thread wether it is interrupted or not. When thread is alive this method return true.
    
-4. sleep() - this method is used to BLOCK the thread for given interval of time. This method throws InterruptedException if the thread is interrupted while it is in sleep.
+4. sleep() - this method is used to BLOCK the thread for given interval of time. This method throws InterruptedException if the thread is interrupted while it is in sleep. This method releases lock over object
 
-5. yield() -  This method instructs the thread schedular to pass the CPU to other waiting thread if any
+5. wait() - wait method NOT releases the lock over object. Thread calls wait(), however, no other threads can access the lock until the thread wakes up or notified.
+   
+6. yield() -  This method instructs the thread schedular to pass the CPU to other waiting thread if any
 
-6. Thread.currentThread() - returns a reference to the current thread.
+7. Thread.currentThread() - returns a reference to the current thread.
 
-7. setDaemon(true) : we can set thread as daemon thread.
+8. setDaemon(true) : we can set thread as daemon thread.
 
 ### States of Thread
 1. NEW - Thread is created but not yet started
@@ -189,6 +191,35 @@ public class Main {
     }
 }
 ```
+
+### Thread Syncronization
+ Thread synchronization is used to solve concurrency problems that exist in parallel processing. Concurrency problem occurs when multiple threads are accessing the same SHARED OBJECT.
+ example - 
+ 1. multiple transaction getting performed on same account
+ 2. multiple people trying to reserve ticket for same seat
+
+Synchronization can be achieved:
+1. synchronized method
+2. synchronized block
+3. locks
+
+synchronized method
+```
+class Sample {
+    synchronized void f() {...}
+}
+```
+
+synchronized block
+When synchronization is not required for the entire method i.e only certain part of the code must be synchronized then we use synchronized block.  
+```
+synchronized( object ) {
+  // operations over the object
+}
+```
+### Thread Safe Code or Re-entrant code
+When code is safe from concurrency problem then it is called as re-entrant code.
+ 
 
 
 
