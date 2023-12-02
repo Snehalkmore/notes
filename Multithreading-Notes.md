@@ -502,8 +502,93 @@ public class Main {
     }
 }
 ```
+### PRODUCER-CONSUMER problem with Blocking queue
+BlockingQueue is an interface that extends Queue interface. And the implementations classes - 
+1. ArrayBlockingQueue - It is bounded i.e. you need to specify the size. operate on FIFO logic i.e. first in first out, which means that the first inserted element will be the first to be removed.
+2. LinkedBlockingQueue - Optionally Bounded, based on linked nodes i.e. nothing but the linked list. It too operates on FIFO logic.
+3. PriorityBlockingQueue - Unbounded. Objects should be Comparable or you should provide a Comparator.
 
+BlockingQueue operations
+#### Operations that throw Exception if the operation fails.
+1. add(o) - It tries to add an element and if there is no sufficient capacity available this method will throw an exception.
+2. remove(o) - Removes the element that matches with the given object it compares the elements using equals method.
+3. element() - Returns the head element with out removing it. But element() method throws an exception if queue is empty
 
+#### Operations that return a boolean value with out exception
+
+1. offer(o) - Returns true if the element is added otherwise false.
+2. poll() - Removes the head element of the queue and returns it, if queue is empty it returns null.
+3. peek() - Returns the head element with out removing it, it returns null if queue is empty.
+
+#### Operations that block.
+1. put(o) - It will add the element to the queue, but if the queue is full, then it will block the thread till the space is available.
+2. take() - Returns the head element of the queue, if queue is empty this method will block the thread till an element is available.
+
+#### And the methods with timeout
+1. offer(o, timeout, timeunit)
+2. poll(timeout, timeunit)
+
+example
+```
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+class ProducerThread extends Thread {
+    BlockingQueue<String> queue;
+	
+    public ProducerThread(BlockingQueue<String>  queue) {
+	this.queue = queue;
+    }
+	
+    @Override
+    public void run() {
+	for(int i=1; i <= 10; i++) {
+	    String msg = "Hello-" + i;
+            
+            // Blocks the thread until the space is available.
+	    try {
+		queue.put(msg);
+                System.out.println("Produced - " + msg);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	   
+	}
+    }
+}
+ 
+class ConsumerThread extends Thread {
+    BlockingQueue<String> queue;
+	
+    public ConsumerThread(BlockingQueue<String> queue) {
+	this.queue = queue;
+    }
+	
+    @Override
+    public void run() {
+        for(int i=1; i<=10; i++) {
+	    String message = null;
+ 
+            // Blocks the thread until the element is available.
+	    try {
+		message = queue.take();
+                System.out.println("Consumed - " + message);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	    
+	}
+    }
+}
+ 
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+	BlockingQueue<String> queue = new ArrayBlockingQueue<String>(1);
+	new ProducerThread(queue).start();
+	new ConsumerThread(queue).start();
+    }
+}
+```
  
 
 
