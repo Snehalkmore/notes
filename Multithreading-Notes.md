@@ -282,7 +282,7 @@ public class Main {
     }
 }
 ```
-solution : changing squeunce of lock in writer2
+Solution : changing squeunce of lock in writer2
 ```
 @Override
  public void run() {
@@ -295,6 +295,120 @@ solution : changing squeunce of lock in writer2
  }
 
 ```
+
+### Reentrant Locks
+#### Read/Write Lock -
+```
+ReadWriteLock rw_lock = new ReentrantReadWriteLock();
+ 
+```
+Read/Write Lock gives us more flexibility during locking and unlocking. Based on the type of operation being performed over the object we can segregate the locks into
+
+1) readLock - readLock allows us to lock the object for read operation, and the interesting point is that the read operation can be shared i.e if two threads are waiting for readLock then both of them can proceed forward with the operation as read operation doesn't change the data.
+
+2) writeLock - writeLock is mutually exclusive i.e. if a writeLock is accepted then all the other lock requests should wait till the thread that owns the lock releases it.
+
+example
+```
+T1 -> lock.readLock();
+
+T2 -> lock.readLock();   ------  T1, T2, T3 can share the readLock and proceed forward with the operation
+
+T3 -> lock.readLock(); 
+
+T4 -> lock.writeLock();  -----T4 should wait till T1, T2 and T3 unlocks.
+
+T5 -> lock.readLock(); -------t5 is in wait state since t4 is in wait state
+
+```
+This is in contrast to synchronized methods/blocks because for synchronized method/block there is no segregation of read and write operations. Object is locked no matter whether it is read or write.
+
+```
+Caution - It is always better to put the unlock operation in finally, as you need to unlock irrespective of exceptions.
+```
+
+example
+```
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+ 
+class Sample {
+	
+    private int x;
+	
+    // ReadWriteLock object for requesting the lock.
+    ReadWriteLock rw_lock = new ReentrantReadWriteLock();
+ 
+    public int getX() {
+        return x;
+    }
+ 
+    public void setX(int x) {
+	this.x = x;
+    }
+	
+    public void incr() {
+		
+	// Request the write lock as the 
+	// operation is intended to modify the data.
+ 
+	Lock lock = rw_lock.writeLock();                   //aquiring lock using writeLock
+	lock.lock();
+ 
+	try {
+		
+	    int y = getX();
+	    y++;
+			
+	    // Just for simulation
+	    try { Thread.sleep(1); } catch(Exception e) {}
+			
+	    setX(y);
+ 
+	} finally {
+	    // Unlock 
+	    lock.unlock();              //releasing lock
+	}	
+    }
+	
+}
+ 
+class MyThread extends Thread {
+	
+    Sample obj;
+	
+    public MyThread(Sample obj) {
+	this.obj = obj;
+    }
+	
+    public void run() {
+	obj.incr();
+    }	
+}
+ 
+public class Main {
+ 
+    public static void main(String[] args) {
+	Sample obj = new Sample();
+	obj.setX(10);	
+	MyThread t1 = new MyThread(obj);
+	MyThread t2 = new MyThread(obj);	
+	t1.start();
+	t2.start();		
+	try {
+	    t1.join();
+	    t2.join();
+	} catch (InterruptedException e) {
+	    e.printStackTrace();
+	}
+		
+	System.out.println( obj.getX() );	
+    }
+}
+
+```
+
  
 
 
