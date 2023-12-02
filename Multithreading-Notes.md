@@ -54,8 +54,38 @@ public class Main {
 
 ### Thread class methods
 1. stop() - stop method is used to stop the execution of thread. but it leaves the system in incosistent state because we are not giving chance to rollback or revert the actions. DUe to this it is deprecated.
+   
 2. interrupt() - With this method, thread can decide wether they want to interrupt the task. When thread is alive this method return true.
+   
 3. interrupted() - this method is used to check the state of thread wether it is interrupted or not. When thread is alive this method return true.
+   
 4. sleep() - this method is used to BLOCK the thread for given interval of time. This method throws InterruptedException if the thread is interrupted while it is in sleep.
-5. 
+
+5. yield() -  This method instructs the thread schedular to pass the CPU to other waiting thread if any
+
+
+### States of Thread
+1. NEW - Thread is created but not yet started
+
+2. RUNNABLE - thread is executing in JVM. Internally it has two sub-states : READY and RUNNING. when you start the thread it comes to Ready state and wait for the CPU, and if CPU is allocated then it goes into Running state. in other words when the Thread schedular suspends the thread then it goes back to the Ready state and waits for its turn again.
+
+3. BLOCKED - thread is blocked if its waiting for Aquaring monitor lock. Synchronized block or method can be good example of it.
+
+4. WAITING - Thread can be in waiting state for another thread to complete its task. wait and join methods
+
+5. TIMED WAITING - Thread can be in waiting state for another thread to complete its task for given interva. wait(milis) or join(milis) methods used for this.
+
+6. TERMINATED - Threads go to this state either by completing the task or in middle it got terminated.
+
+### Thread Priorities
+1. MIN_PRIORITY - 1 being the minimum priority
+2. NORM_PRIORITY - 5 is the normally priority, this is the default priority value.
+3. MAX_PRIORITY - 10 being the max priority.
+   
+```
+Thread.setPriority(int newPriority)
+```
+
+
+
 
