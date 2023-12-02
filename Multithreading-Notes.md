@@ -63,6 +63,9 @@ public class Main {
 
 5. yield() -  This method instructs the thread schedular to pass the CPU to other waiting thread if any
 
+6. Thread.currentThread() - returns a reference to the current thread.
+
+7. setDaemon(true) : we can set thread as daemon thread.
 
 ### States of Thread
 1. NEW - Thread is created but not yet started
@@ -85,6 +88,51 @@ public class Main {
 ```
 Thread.setPriority(int newPriority)
 ```
+
+### Daemon thread
+Daemon threads are the ones which does not prevent the JVM from exiting the application once it finishes. performing background tasks such as garbage collection or collecting application statistics etc. 
+Note that the Java Virtual Machine exits when the only threads running are all daemon threads.
+```
+public class Main1 {
+ 
+    public static void main(String[] args) {
+		
+	System.out.println("System threads..........");
+		
+	Thread thr = Thread.currentThread();
+	ThreadGroup grp = thr.getThreadGroup();
+	while (grp.getParent() != null) {
+	    grp = grp.getParent();
+	}
+		
+	Thread [] threads = new Thread[10];
+	int n = grp.enumerate(threads);
+		
+	for (int i=0; i < n; i++) {
+	    System.out.println(
+		"Thread Name: " + threads[i].getName() + 
+		" ; isDaemon: " + threads[i].isDaemon());
+	}
+    }
+}
+Output -
+System threads..........
+Thread Name: Reference Handler ; isDaemon: true
+Thread Name: Finalizer ; isDaemon: true
+Thread Name: Signal Dispatcher ; isDaemon: true
+Thread Name: main ; isDaemon: false
+```
+
+### Callable interface
+callable interface allows us to perform asynchronous task which is capable of returning result
+```
+interface Callable<V> {
+    V call() throws Exception;
+}
+```
+#### Future 
+When you submit a Callable task to the ExecutorService, it returns a Future object. 
+This object enables us to access the request and check for the result of the operation if it is completed.
 
 
 
