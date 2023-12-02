@@ -26,6 +26,7 @@ What is way to create thread/threads using executorService ?
 ExecutorService executor = Executors.newFixedThreadPool(5);
 executor.execute( runnableTaskInstance );
 ```
+Simple example of copying content of multiple files to other files
 ```
 public class Main {
  
@@ -50,4 +51,11 @@ public class Main {
     }
 }
 ```
+
+### Thread class methods
+1. stop() - stop method is used to stop the execution of thread. but it leaves the system in incosistent state because we are not giving chance to rollback or revert the actions. DUe to this it is deprecated.
+2. interrupt() - With this method, thread can decide wether they want to interrupt the task. When thread is alive this method return true.
+3. interrupted() - this method is used to check the state of thread wether it is interrupted or not. When thread is alive this method return true.
+4. sleep() - this method is used to BLOCK the thread for given interval of time. This method throws InterruptedException if the thread is interrupted while it is in sleep.
+5. 
 
