@@ -219,6 +219,82 @@ synchronized( object ) {
 ```
 ### Thread Safe Code or Re-entrant code
 When code is safe from concurrency problem then it is called as re-entrant code.
+
+### Deadlock
+when two thread are trying to aquaire lock on object which are already aquired by oppsite thread, in that case deadlock occurs.
+
+Issue with below code is writer1 aqaured lock on pen and writer2 aquired lock on book
+```
+class Writer1 extends Thread {
+	
+    Object book;
+    Object pen;
+	
+    public Writer1(Object book, Object pen) {
+	this.book = book;
+	this.pen = pen;
+    }
+	
+    @Override
+    public void run() {
+		
+	synchronized(book) {
+	    try { Thread.sleep(10); } catch(Exception e) {}
+	    synchronized(pen) {
+		System.out.println("Writer1 writing");
+	    }
+	}	
+    }
+}
+ 
+class Writer2 extends Thread {
+	
+    Object book;
+    Object pen;
+	
+    public Writer2(Object book, Object pen) {
+	this.book = book;
+	this.pen = pen;
+    }
+	
+    @Override
+    public void run() {
+		
+	synchronized(pen) {
+	    try { Thread.sleep(10); } catch(Exception e) {}
+	    synchronized(book) {
+		System.out.println("Writer2 writing");
+	    }
+	}	
+    }
+}
+ 
+public class Main {
+ 
+    public static void main(String[] args) {	
+	Object book = new Object();
+	Object pen = new Object();
+		
+	new Writer1(book, pen).start();
+	new Writer2(book, pen).start();
+		
+	System.out.println("Main is done");
+    }
+}
+```
+solution : changing squeunce of lock in writer2
+```
+@Override
+ public void run() {
+    synchronized(book) {
+        try { Thread.sleep(10); } catch(Exception e) {}
+	synchronized(pen) {
+	    System.out.println("Writer2 writing");
+	}
+    }	
+ }
+
+```
  
 
 
