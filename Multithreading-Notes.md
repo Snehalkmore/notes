@@ -59,9 +59,9 @@ public class Main {
    
 3. interrupted() - this method is used to check the state of thread wether it is interrupted or not. When thread is alive this method return true.
    
-4. sleep() - this method is used to BLOCK the thread for given interval of time. This method throws InterruptedException if the thread is interrupted while it is in sleep. This method releases lock over object
+4. sleep() - this method is used to BLOCK the thread for given interval of time. This method throws InterruptedException if the thread is interrupted while it is in sleep. This method pauses the current thread and DOES NOT release any locks. This method belongs to thread call and called in any context by Thread.sleep(1000)
 
-5. wait() - wait method NOT releases the lock over object. Thread calls wait(), however, no other threads can access the lock until the thread wakes up or notified.
+5. wait() - instance method that’s used for thread synchronization. it can only be called from a synchronized block. It releases the lock on the object so that another thread can jump in and acquire a lock. This method Releases the lock over the object and takes the thread to WAITING state. And the thread remains in that state until some other thread calls the notify() method over the same object.
    
 6. yield() -  This method instructs the thread schedular to pass the CPU to other waiting thread if any
 
@@ -408,6 +408,101 @@ public class Main {
 }
 
 ```
+
+### PRODUCER-CONSUMER PROBLEM - wait-notify example
+```
+import java.util.ArrayList;
+import java.util.List;
+ 
+class MessageQueue {
+	
+    List<String> messages;
+    int limit;
+	
+    public MessageQueue(int limit) {
+	messages = new ArrayList<String>();
+	this.limit = limit;
+    }
+	
+    public boolean isFull() {
+	return messages.size() == limit;
+    }
+	
+    public boolean isEmpty() {
+	return messages.size() == 0;
+    }
+	
+    public synchronized void enqueue(String msg) {
+		
+	while (isFull()) {
+	    try {
+		this.wait();
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	}
+		
+	messages.add(msg);
+	this.notify();	
+    }
+	
+    public synchronized String dequeue() {
+		
+	while (isEmpty()) {
+	    try {
+		this.wait();
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+	}
+		
+	String message = messages.remove(0);
+	this.notify();
+	return message;
+    }
+	
+}
+ 
+class ProducerThread extends Thread {
+    MessageQueue queue;
+	
+    public ProducerThread(MessageQueue queue) {
+	this.queue = queue;
+    }	
+    @Override
+    public void run() {
+	for(int i=1; i <= 10; i++) {
+	    String msg = "Hello-" + i;
+	    queue.enqueue(msg);
+	    System.out.println("Produced - " + msg);
+	}
+    }
+}
+ 
+class ConsumerThread extends Thread {
+    MessageQueue queue;
+	
+    public ConsumerThread(MessageQueue queue) {
+	this.queue = queue;
+    }	
+    @Override
+    public void run() {
+	for(int i=1; i<=10; i++) {
+	    String message = queue.dequeue();
+	    System.out.println("Consumed - " + message);
+	}
+    }
+}
+ 
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+	MessageQueue queue = new MessageQueue(1);
+	new ProducerThread(queue).start();
+	new ConsumerThread(queue).start();
+    }
+}
+```
+
 
  
 
