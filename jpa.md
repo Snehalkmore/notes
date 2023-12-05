@@ -1,6 +1,10 @@
 # JPA notes
 
-## JPA find queries
+## Difference between JPA and CRUD repository
+<img width="484" alt="image" src="https://github.com/Snehalkmore/notes/assets/14993594/ecb193af-c8ff-4f14-985e-fb83ecee91a4">
+
+
+## JPA FIND Query
 ```
 public interface StudentRepo implements JpaRepository<customCLass,int>{
 
@@ -26,6 +30,15 @@ public interface StudentRepo implements JpaRepository<customCLass,int>{
 List<Student> findNameLike(String name); ..... pass input like %name%
    
 }
+
+```
+
+## JPA Paging and Sorting
+```
+Pageable pageable = new PageRequest(int pageIndex, int noOfRecordsOnPage);
+
+how to test?
+List<Student> students = studentRepository.findAll(pageable);
 
 ```
 
