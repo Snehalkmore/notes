@@ -1,15 +1,29 @@
 # JPA notes
 
+## JPA find queries
+```
+public interface StudentRepo implements JpaRepository<customCLass,int>{
+
+
+ List<Student> findByName(String name);
+
+ List<Student> findByNameAndAge(String name, int age);   ............And is used similarly we can use or 
+}
+
+```
+
+
 ## Native Query - simple sql query and named paramenter query exampl
 ```
 public interface StudentRepo implements JpaRepository<customCLass,int>{
 
 @Query(value = "select * from student", nativeQuery=true) ............simple query
- List<Student> findAllStudentNQ();
+{List<Student> findAllStudentNQ();
 }
 
 @Query(value = "select * from student where fnm =:firstName", nativeQuery=true) ............named parameter query
- List<Student> findAllStudentNQ(@Param("firstName")String firstName);
+{ List<Student> findAllStudentNQ(@Param("firstName")String firstName);
+}
 }
 
 ```
