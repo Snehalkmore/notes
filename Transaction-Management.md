@@ -9,7 +9,7 @@ transaction manages the changes performed in one or more system. changes could b
 ## What is ACID properties ?
 1. Atomacity - it describes all or nothing principle. Within transaction, either all transaction to be performed or nothing. Example, if we commit successfully, which implies that all executions are completed. In case of exception or error, it enables to roll back transaction.
    
-2. Consistency - it implies transaction take system from one consistent state to other consistent state. example, either all data committed or it should get rolled back to original or starting state. to maintain this principle, the system should go via all contraints of foreign key, primary key, non null values etc.
+2. Consistency - it implies transaction take system from one consistent state to other consistent state. example, either all data committed or it should get rolled back to original or starting state. to maintain this principle, the system should go via all contraints of foreign key, primary key, non null values etc. example - amount deducted from my account and credited to other account. 
 
 3. Isolation - it means changes we perform in transaction, should be visible within transaction ONLY until we commit changes.
 
