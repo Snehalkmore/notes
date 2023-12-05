@@ -39,11 +39,21 @@ how to test?
 
 ```
 Pageable pageable = new PageRequest(int pageIndex, int noOfRecordsOnPage);...... Pageable interface & PageRequest class
+Page<Student> studentsPerPage = studentRepository.findAll(pageable);  .............Page<Studdent>
+studentsPerPage.stream().forEach(e->sysout(e.getName));
+***********************************************************************
 
-Page<Student> students = studentRepository.findAll(pageable);  .............Page<Studdent>
+Sort Desc order with multiple properties
+------------------------------------------
+List<Student> students = repositroy.findAll(new Sort(Direction.DESC,"name",age)).... first sort by name then age in desc order
 
-students.stream().forEach(e->sysout(e.getName));
+*************************************************************************************
 
+Sort with diff order
+----------------------------
+List<Student> students = repositroy.findAll(
+             new Sort(new Sort.Order(Direction.DESC,"name")
+             ,new Sort(new Sort.Order(Direction.ASC,"age"))
 ```
 
 
