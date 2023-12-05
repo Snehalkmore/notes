@@ -1,6 +1,6 @@
 # JPA notes
 
-custom id generator strategy
+### custom ID generator strategy
 1. create class and implement IdentifierGenerator interface
 2. override generate method which return Serializable
 ```
