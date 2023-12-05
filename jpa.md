@@ -17,14 +17,15 @@ return id;
 ```
 
 3. in class for example employee
-   ```
+ ```
    @Entity
    @Table
    class Employee{
 
    @GenericGenerator(name="emp_id",strategy="full.class.path.of.custom.generator.CustomGenerator")
    @Id
+   @GeneratedValue(generator="emp_id")
    private long id;
 
    }
-   ```
+ ```
