@@ -102,7 +102,7 @@ class EmployeeService{
 //@Transactional(propogation="Propogation.---").......commented annotation
 p.v.saveEmp(employee e){
 emprepo.save(e); 
-addressService.saveAddr(args);  .......throws exception due to no transaction found
+addressService.saveAddr(args);  .......throws exception due to no transaction found on parent class method
 
 }
 
