@@ -7,7 +7,15 @@ public interface StudentRepo implements JpaRepository<customCLass,int>{
 
  List<Student> findByName(String name);
 
- List<Student> findByNameAndAge(String name, int age);   ............And is used similarly we can use or 
+ ....And is used similarly we can use or
+ List<Student> findByNameAndAge(String name, int age);
+
+ ....greaterThan operator
+ List<Student> findByAgeGreaterThan(int age);
+
+....contains operator
+ List<Student> findByPincodeNameContains(int pincode);
+   
 }
 
 ```
