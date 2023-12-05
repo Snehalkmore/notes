@@ -6,7 +6,14 @@ Spring provides declarative way to support transaction management. Once we annot
 ## What is transaction?
 transaction manages the changes performed in one or more system. changes could be database or message broker or any other changes. The main goal of transaction is to maintain ACID properties to provide consistency and validity of data.
 
-## ACID Properties
+## What is ACID properties ?
+1. Atomacity - it describes all or nothing principle. Within transaction, either all transaction to be performed or nothing. Example, if we commit successfully, which implies that all executions are completed. In case of exception or error, it enables to roll back transaction.
+   
+2. Consistency - it implies transaction take system from one consistent state to other consistent state. example, either all data committed or it should get rolled back to original or starting state. to maintain this principle, the system should go via all contraints of foreign key, primary key, non null values etc.
+
+3. Isolation - it means changes we perform in transaction, should be visible within transaction ONLY until we commit changes.
+
+4. Durability - ensures that committed changes are Persisted. 
 
 ## How transactional works internally ?
 Spring creates proxies or manipulate the byte code to manage creation,commit and rollback transaction.
