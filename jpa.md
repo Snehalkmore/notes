@@ -34,11 +34,15 @@ List<Student> findNameLike(String name); ..... pass input like %name%
 ```
 
 ## JPA Paging and Sorting
-```
-Pageable pageable = new PageRequest(int pageIndex, int noOfRecordsOnPage);
 
 how to test?
-List<Student> students = studentRepository.findAll(pageable);
+
+```
+Pageable pageable = new PageRequest(int pageIndex, int noOfRecordsOnPage);...... Pageable interface & PageRequest class
+
+Page<Student> students = studentRepository.findAll(pageable);  .............Page<Studdent>
+
+students.stream().forEach(e->sysout(e.getName));
 
 ```
 
