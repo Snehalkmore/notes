@@ -3,6 +3,11 @@
 Spring provides declarative way to support transaction management. Once we annotate method with @Transactional annotation, the changes will be reflected in database after scope of method completes. In case of failure, transaction will get rolled back. 
 
 
+## What is transaction?
+transaction manages the changes performed in one or more system. changes could be database or message broker or any other changes. The main goal of transaction is to maintain ACID properties to provide consistency and validity of data.
+
+## ACID Properties
+
 ## How transactional works internally ?
 Spring creates proxies or manipulate the byte code to manage creation,commit and rollback transaction.
 
