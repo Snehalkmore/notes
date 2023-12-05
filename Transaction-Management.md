@@ -1,7 +1,15 @@
 # Transactional Management
 
-## Transactional propogation type
+Spring provides declarative way to support transaction management. Once we annotate method with @Transactional annotation, the changes will be reflected in database after scope of method completes. In case of failure, transaction will get rolled back. 
 
+
+## How transactional works internally ?
+Spring creates proxies or manipulate the byte code to manage creation,commit and rollback transaction.
+
+if class annotated with @transactional and method annotated with @transactional, then method level annotation given preferance over class level.
+
+## Transactional propogation type
+It means how transaction boundries are managed while propogating from parent to child class methods. 
 
 ### 1. REQUIRED_NEW
 1. it requires its own new transaction.
