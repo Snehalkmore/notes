@@ -1,5 +1,22 @@
 # JPA notes
 
+## Native Query - simple sql query and named paramenter query exampl
+```
+public interface StudentRepo implements JpaRepository<customCLass,int>{
+
+@Query(value = "select * from student", nativeQuery=true) ............simple query
+ List<Student> findAllStudentNQ();
+}
+
+@Query(value = "select * from student where fnm =:firstName", nativeQuery=true) ............named parameter query
+ List<Student> findAllStudentNQ(@Param("firstName")String firstName);
+}
+
+```
+
+## JPQL
+
+
 ### custom ID generator strategy
 1. create class and implement IdentifierGenerator interface
 2. override generate method which return Serializable
