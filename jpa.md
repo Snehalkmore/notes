@@ -136,3 +136,75 @@ return id;
 
    }
  ```
+
+## JPA Inheritance strategy Mapping (SINGLE_TABLE ,JOINED, TABLE_PER_CLASS)
+
+1. SINGLE TABLE
+```
+create table payment(
+id int PRIMARY KEY,
+pmode varchar(2),
+amount decimal(8,3) ,
+cardnumber varchar(20),
+checknumber varchar(20)
+);
+```
+
+```
+@Inheritance(strategy=InheritanceTypr.SINGLE_TABLE)
+@DiscrimatorColumn(name="mode",discriminatorType=DiscriminatorType.String)
+abstract class Payment{
+  private int id;
+  private double amount;
+}
+
+@DisciminatorValue(value="ch")
+class Check  extends Payment{
+}
+
+@DisciminatorValue(value="cc")
+class creditCard  extends Payment{
+}
+```
+2. TABLE_PER_CLASS
+```
+create table card(
+id int PRIMARY KEY,
+amount decimal(8,3),
+cardnumber varchar(20)
+)
+
+create table bankcheck(
+id int PRIMARY KEY,
+amount decimal(8,3),
+checknumber varchar(20)
+)
+```
+
+```
+@Inheritance(strategy=InheritanceTypr.TABLE_PER_CLASS)
+abstract class Payment{
+  private int id;
+  private double amount;
+}
+
+class Check extends Payment{
+}
+
+class creditCard extends Payment{
+}
+```
+
+### Hibernate Component mapping
+```
+@Entity
+class Employee{
+ @Embedded
+ private Address addr;
+}
+
+@Embeddable
+class Address{
+
+}
+```
