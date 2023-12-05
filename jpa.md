@@ -15,6 +15,15 @@ public interface StudentRepo implements JpaRepository<customCLass,int>{
 
 ....contains operator
  List<Student> findByPincodeNameContains(int pincode);
+
+....between operator
+ List<Student> findByAgeBetween(int minAge,int maxAge);
+
+....in operator
+ List<Student> findByIdIn(List<Integer> ids);
+
+...like operator
+List<Student> findNameLike(String name); ..... pass input like %name%
    
 }
 
