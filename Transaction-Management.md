@@ -118,4 +118,6 @@ p.v. saveAddr(args){
 It uses existing transaction, but does not open new transaction. 
 
 ### 7. REQUIRED (Default type . JPA have by default propogation type)
+1. It uses existing transaction if already open. otherwise create new transaction.
+2. if parent class method annotated with this propogatation, then child class propogation level will be hidden since it comes under parent method's propogation scope.
      
