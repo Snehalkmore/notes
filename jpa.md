@@ -123,7 +123,7 @@ return id;
 }
 ```
 
-3. in class for example employee
+3. in Entity class for example employee
  ```
    @Entity
    @Table
