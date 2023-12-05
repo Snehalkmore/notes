@@ -38,14 +38,14 @@ List<Student> findNameLike(String name); ..... pass input like %name%
 how to test?
 
 ```
-Pageable pageable = new PageRequest(int pageIndex, int noOfRecordsOnPage);...... Pageable interface & PageRequest class
-Page<Student> studentsPerPage = studentRepository.findAll(pageable);  .............Page<Studdent>
+Pageable pageable = new PageRequest(int pageIndex, int noOfRecordsOnPage);    ...... Pageable interface & PageRequest class
+Page<Student> studentsPerPage = studentRepository.findAll(pageable);           .............Page<Studdent>
 studentsPerPage.stream().forEach(e->sysout(e.getName));
 ***********************************************************************
 
 Sort Desc order with multiple properties
 ------------------------------------------
-List<Student> students = repositroy.findAll(new Sort(Direction.DESC,"name",age)).... first sort by name then age in desc order
+List<Student> students = repositroy.findAll(new Sort(Direction.DESC,"name",age))      .... first sort by name then age in desc order
 
 *************************************************************************************
 
@@ -61,21 +61,53 @@ List<Student> students = repositroy.findAll(
 ```
 public interface StudentRepo implements JpaRepository<customCLass,int>{
 
-@Query(value = "select * from student", nativeQuery=true) ............simple query
-{List<Student> findAllStudentNQ();
-}
+@Query(value = "select * from student", nativeQuery=true)        ............simple query
+List<Student> findAllStudentNQ();
 
-@Query(value = "select * from student where fnm =:firstName", nativeQuery=true) ............named parameter query
-{ List<Student> findAllStudentNQ(@Param("firstName")String firstName);
-}
+
+@Query(value = "select * from student where fnm =:firstName", nativeQuery=true)      ............named parameter query
+List<Student> findAllStudentNQ(@Param("firstName")String firstName);
+
 }
 
 ```
 
 ## JPQL
 
+```
+read queries
+public interface StudentRepo implements JpaRepository<customCLass,int>{
 
-### custom ID generator strategy
+@Query(value = "select st.fnm,st.age from student st")        .........partial data fetch
+List<Student> findAllStudentPartialData();
+
+
+@Query(value = "from student where name=:fmn")                   ............find by name
+List<Student> findByFirstName(@Param("fmn") String fmn);
+
+@Modifying
+@Query(value = "delete from student where name=:fmn")                   ............delete by name use @Modifying
+List<Student> deleteStudentByFirstName(@Param("fmn") String fmn);
+
+
+}
+```
+Note : 
+1. use @Modifying for delete update or insert queries
+2. In Junit, if we annotate test method with @transactional, we cannot commit the changes to db since it get rolled back.
+in case, if we want to persist changes done from junit testing, then use @Rollback(false) annotation over method
+
+```
+@Test
+@Transactional
+@Rollback(false)
+public void testmethod(){
+ repo.deleteStudentByFirstName("SM");
+}
+```
+
+
+## custom ID generator strategy
 1. create class and implement IdentifierGenerator interface
 2. override generate method which return Serializable
 ```
