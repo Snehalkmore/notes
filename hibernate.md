@@ -1,4 +1,7 @@
-Hibernate mapping
+# Hibernate Architecture
+
+
+### Hibernate mapping
 1. one to onr
 2. one to many
 3. many to many
@@ -54,4 +57,35 @@ public class Address {
 ```
 
 @OneToMany mapping
+One post can have multiple comments but one comment have only post.
+```
+POST class 
+@Entity
+@Table(name = "posts")
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String title;
+    String description;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    Set<Comment> comments = new HashSet<>();
+}
+
+Comment class
+@Entity
+@Table(name = "comments")
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String author;
+    String content;
+
+    @Column(name = "post_id")
+    Long postId;
+}
+```
 
