@@ -137,6 +137,27 @@ return id;
    }
  ```
 
+## Composite key
+```
+@Embeddable                       ........this annotation makes composite key
+class EmployeeIdentity{          ---------------composite key
+   private String empId;
+   private String companyId;
+}
+
+@Entity
+@Table
+class EMployee{
+
+  @EmbeddedId                     ...................... this annotation used to add composite key in entity class
+  private EmployeeIdentity id;
+
+  private String name;
+  private String email;
+
+}
+```
+
 ## JPA Inheritance strategy Mapping (SINGLE_TABLE ,JOINED, TABLE_PER_CLASS)
 
 1. SINGLE TABLE
