@@ -57,6 +57,7 @@ List<Student> students = repositroy.findAll(
 ```
 
 
+
 ## Native Query - simple sql query and named paramenter query exampl
 ```
 public interface StudentRepo implements JpaRepository<customCLass,int>{
@@ -71,6 +72,7 @@ List<Student> findAllStudentNQ(@Param("firstName")String firstName);
 }
 
 ```
+
 
 ## JPQL
 
@@ -92,6 +94,8 @@ List<Student> deleteStudentByFirstName(@Param("fmn") String fmn);
 
 }
 ```
+
+
 Note : 
 1. use @Modifying for delete update or insert queries
 2. In Junit, if we annotate test method with @transactional, we cannot commit the changes to db since it get rolled back.
@@ -105,6 +109,7 @@ public void testmethod(){
  repo.deleteStudentByFirstName("SM");
 }
 ```
+
 
 
 ## custom ID generator strategy
@@ -122,7 +127,6 @@ return id;
 }
 }
 ```
-
 3. in Entity class for example employee
  ```
    @Entity
@@ -136,6 +140,9 @@ return id;
 
    }
  ```
+
+
+
 
 ## Composite key
 ```
@@ -157,6 +164,8 @@ class EMployee{
 
 }
 ```
+
+
 
 ## JPA Inheritance strategy Mapping (SINGLE_TABLE ,JOINED, TABLE_PER_CLASS)
 
