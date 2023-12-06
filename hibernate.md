@@ -56,7 +56,7 @@ public class Address {
 
 ```
 
-@OneToMany mapping
+## @OneToMany mapping
 One post can have multiple comments but one comment have only post.
 ```
 POST class 
@@ -89,3 +89,41 @@ public class Comment {
 }
 ```
 
+## @ManyToMany Mapping 
+every employees have multiple roles and every role is assigned to multiple employees.
+
+```
+Employee class
+@Table(name = "employees")
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+    String email;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "employee_roles",
+        joinColumns = @JoinColumn(
+            name = "employee_id", referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "role_id", referencedColumnName = "id"
+        )
+    )
+    Set<Role> roles = new HashSet<>();
+}
+
+
+Role
+
+@Table(name = "roles")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
+    Set<Employee> employees = new HashSet<>();
+```
