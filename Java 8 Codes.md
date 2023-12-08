@@ -7,27 +7,28 @@ boolean isPalindrome = IntStream.range(0, str.length()/2)
 
 ## 2. Prime Number
 ```
-List<Integer> primeNumbers =
-	            IntStream
-	                    .rangeClosed(2,100)
-	                    .filter(number -> IntStream.range(2,number/2)
-	                            .noneMatch(divider -> number % divider == 0))
-	                    .boxed()
-	                    .collect(Collectors.toList());
+List<Integer> primeNumbers = IntStream.rangeClosed(2, 100)
+				.filter(
+						number -> IntStream.range(2, number)
+						.noneMatch(divider -> number % divider == 0)
+						).boxed().collect(Collectors.toList());
 
 ```
 Java 7
 ```
 ArrayList<Integer> a = new ArrayList<>();
-		for (int n = 1; n <= 100; n++) {
+		for (int j = 1; j <= 100; j++) {
 			int c = 0;
-			for (int i = 1; i <= n; i++)
-				if (n % i == 0)
+			for (int i = 1; i <= j; i++)
+				if (j % i == 0)
 					c++;
 			if (c == 2)
-				a.add(n);
+				a.add(j);
 			else
 				continue;
 		}
 		System.out.println(a);
 ```
+
+
+
