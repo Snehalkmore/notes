@@ -140,4 +140,188 @@ listOfString =  listOfString.stream()
 		.map(e->e.getKey())
 		.collect(Collectors.toList());
 ```
-## 12. 
+## 12. Remove Duplicate Elements From List/ Get unique element list
+```
+ List<String> listOfStrings = Arrays.asList("Java", "Python", "C#", "Java", "Kotlin", "Python");
+	
+ List<String> uniqueStrings = listOfStrings.stream()
+		 .distinct()
+		 .collect(Collectors.toList());
+```
+
+## 13. Print first 10 Even number
+```
+IntStream.rangeClosed(1, 10)
+		.map(i->i*2)
+		.forEach(s->System.out.println(s));
+```
+## 14. Merge Unsorted Arrays Into Single Sorted Array Distinct
+```
+int[] a = new int[] {4, 2, 5, 1};
+ int[] b = new int[] {8, 1, 9, 5};
+
+List list =  IntStream.concat(Arrays.stream(a), Arrays.stream(b))           //concat method takes streams
+        .sorted()
+        .distinct()
+        .boxed()
+        .collect(Collectors.toList());
+```
+
+## 15. List Of Pair Of 12 Divisible Numbers
+```
+List<Integer> list = Arrays.asList(6,4,8,6,7,10,5,1,2);
+int sum =12;
+
+IntStream.range(0, list.size())
+.forEach(i->{
+        IntStream.range(1, list.size())
+        .filter(j->(list.get(i)+list.get(j)==sum && i<j))
+	.forEach(j->System.out.println("{"+list.get(i)+","+list.get(j)+"}"));
+		});
+```
+
+## 16. Append zeros at the end of elements
+// i/p - 1,2,3,0,0,0,4,0,0,0,5
+// o/p - 1,2,3,4,5,0,0,0,0,0,0
+
+```
+List<Integer> list = Arrays.stream(arr)
+                    .filter(s -> (s > 0))
+                    .boxed()
+                    .collect(Collectors.toList());
+		
+for(int i=list.size();i<arr.length;i++) {
+   list.add(0);
+}
+```
+
+## 17. Group elements by length of String
+```
+List<String> list = List.of("Snehal", "Akash", "Priyanka", "Malan", "Kumar");
+
+final Map<Integer, List<String>> lengthToWords = list.stream()
+				.collect(Collectors.groupingBy(String::length, TreeMap::new, Collectors.toList()));
+```
+
+## 18. Sum of all digits from number
+```
+ int i = 15623;
+
+ //one way
+Integer sum= Stream.of(String.valueOf(i).split(""))
+		 .map(a->Integer.parseInt(a))
+		 .collect(Collectors.reducing(0, (a,b)->(a+b)));
+		 
+		 
+ //another way
+ sum = Stream.of(String.valueOf(i).split(""))
+		 .collect(Collectors.summingInt(Integer::parseInt));
+```
+
+## 19. Find Strings starts with Digit
+```
+ List<String> listOfStrings = Arrays.asList("One", "2wo", "3hree", "Four", "5ive", "Six");
+		 
+List<String> listOfStringStartsWithDigit = listOfStrings.stream()
+		   .filter(str->Character.isDigit(str.charAt(0)))
+		   .collect(Collectors.toList());
+```
+
+## 20. Find Second largest number from list
+```
+ List<Integer> listOfIntegers = Arrays.asList(45, 12, 56, 15, 24, 75, 31, 89);
+		 
+ Integer secondLargNumber = listOfIntegers.stream()
+				 .sorted(Comparator.reverseOrder())
+				 .skip(1)                                  ........use skip(1).findFirst()
+				 .findFirst().get();
+```
+
+## 21. Find Common elements from two Lists
+```
+ List<Integer> list1 = Arrays.asList(71, 21, 34, 89, 56, 28);
+ List<Integer> list2 = Arrays.asList(12, 56, 17, 21, 94, 34);
+	      
+//one way
+ List l = Stream.concat(list1.stream(), list2.stream())
+	     .collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+	     .entrySet().stream()
+	     .filter(t->t.getValue()>1)
+	     .map(s->s.getKey())
+	     .collect(Collectors.toList());
+	     
+	     
+ //another way
+ List listOfCommonElelemnts = list1.stream()
+	    		  .filter(list2::contains)
+	    		  .collect(Collectors.toList());
+```
+
+## 22. Find first 3 Max and min elements from list
+```
+List minimum3Numbers= listOfIntegers.stream()
+		.sorted()
+		.limit(3)
+		.collect(Collectors.toList());
+
+List maximum3Numbers = listOfIntegers.stream()
+		.sorted(Comparator.reverseOrder())
+		.limit(3)
+		.collect(Collectors.toList());
+```
+
+## 23. Fibbonacci series till n number
+```
+\\ first approach
+public static int iterativeFibonacci(int number) {
+		List<Integer> list = new ArrayList<>();
+		list.add(0);
+		list.add(1);
+		for (int i = 2; i < number + 1; i++) {
+			list.add(list.get(i - 2) + list.get(i - 1));
+		}
+		return list.get(number);
+}
+
+\\recursive approach
+public static int fibonacci(int n) {
+		if (n <= 1) {
+			return n;
+		} else {
+			return fibonacci(n - 1) + fibonacci(n - 2);
+		}
+	}
+```
+
+## 24. Anagram or not
+```
+String s1 = "racecar";
+String s2 = "carrace";
+        
+s1 = Stream.of(s1.split(""))
+        .map(s->s.toLowerCase())
+        .sorted()
+        .collect(Collectors.joining());
+        
+s2 = Stream.of(s2.split(""))
+        .map(s->s.toLowerCase())
+        .sorted()
+        .collect(Collectors.joining());
+        
+if(s1.equals(s2)) {
+        System.out.println("Strings are anagram");
+ }else {
+       System.out.println("Strings are Not anagram");
+ }
+```
+
+## Add sufix, prefix and deliminator
+```
+List<String> listOfStrings = Arrays.asList("Facebook", "Twitter", "YouTube", "WhatsApp", "LinkedIn");
+		String updatedString = listOfStrings.stream()
+				      .collect(
+					  Collectors.joining("|", "[", "]")
+					);
+```
+
+
