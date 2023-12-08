@@ -286,6 +286,23 @@ StringBuffer is thread-safe and synchronized whereas StringBuilder is not. That�
 String concatenation operator (+) internally uses StringBuffer or StringBuilder class.
 For String manipulations in a non-multi threaded environment, we should use StringBuilder else use StringBuffer class.
 
+### inner class create seperate .class file
+
+### how overriding internally works?
+ava tooling, interestingly, optionally allows use of the @Override attribute on interface methods. By default it is not allowed. But when enabled, will generate a warning or error when a method does not override an existing base class method or interface method.
+
+### How many classloader exists in jvm
+1. Bootstrap Class Loader – It loads JDK internal classes. It loads rt.jar and other core classes for example java.lang.* package classes.
+2. Extensions Class Loader – It loads classes from the JDK extensions directory, usually $JAVA_HOME/lib/ext directory.
+3. System Class Loader – This classloader loads classes from the current classpath. We can set classpath while invoking a program using -cp or -classpath command line option.
+
+### System.out.println() in Java
+Where System is the class name, it is declared as final. The out is an instance of the System class and is of type PrintStream. Its access specifiers are public and final. It is an instance of "java.io.PrintStream". When we call the member, a PrintStream class object creates internally.
+So, we can call the print() method.
+
+
+
+
 
 
 
