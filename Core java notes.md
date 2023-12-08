@@ -198,8 +198,25 @@ class Test {
 2. Interface Private Methods
 3. @SafeVarargs annotation on method and parameterized constructor - used to check wether method performing safe operations or not
 4. Java Collection Factory Methods - unmodifiable instances of collections.
-5. Stream api change - TakeWhile, dropWhile and ofNullable
+An unmodifiable collection provides space efficiency benefits and prevents the collection from accidentally being modified.
+```
+List<String> stringList = List.of("a", "b", "c");
+Set<String> stringSet = Set.of("a", "b", "c");
+Map<String, Integer> stringMap = Map.of("a", 1, "b", 2, "c", 3);
+```
+6. Stream api change - TakeWhile, dropWhile and ofNullable
+example
+```
+//takeWhile- till condition is matched take all elements
+System.out.println(courses.stream()
+.takeWhile(course->course.getReviewScore()>=95)
+.collect(Collectors.toList()));  
 
+//dropWhile - drop all elements until it satisfy condition and take rest of elements once condition satisfied
+System.out.println(courses.stream()
+.dropWhile(course->course.getReviewScore()>=95)
+.collect(Collectors.toList()));
+```
 
 
 ### Final keyword - where to use
