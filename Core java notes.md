@@ -83,7 +83,39 @@ if a subclass defines a static method with the same signature as a static method
 
 
 ### How to clone object and diff between Shallow and Deep clone
-.
+1. We need to implement marker interface Clonable to achieve the cloning and We need to override the clone method from Object class to achieve cloning
+2. Shallow Copy - When we do copy of some entity to create two objects, but if we change state of one object, then it should get reflected in other object, then this process is called shallow copy
+```
+class ABC  
+{    
+int x = 30;  
+}  
+public class ShallowCopyExample   
+{     
+    public static void main(String argvs[])   
+    {    
+	ABC obj1 = new ABC();    
+	ABC obj2 = obj1;      ..................shallow copy
+	obj2.x = 6;   
+        System.out.println("The value of x is: " + obj1.x);  .......it will change value of x for both instances
+    }  
+}   
+```
+4. Deep Copy - when we want to copy the enitity to create two objects, but changes in one entity should not affect the other entity, in that case we perform the Deep copy.
+```
+class ABC  {  
+int x = 30;  
+}  
+public class DeepCopyExample {     
+	public static void main(String argvs[])   
+	{  
+		ABC obj1 = new ABC();   
+		ABC obj2 = new ABC();  ...........two seperate objects wont affect properties of each other
+                obj2.x = 6;   
+		System.out.println("The value of x is: " + obj1.x);  
+	}  
+}   
+```
 
 
 
@@ -187,6 +219,37 @@ class Test {
 4. Make all mutable fields final so that a field’s value can be assigned only once.
 5. Initialize all fields using a constructor method performing deep copy.
 6. Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
+```
+example
+Since String is immutable, it always does deep copy and create new object in case if we try update the state of object. this just make sure that original object wont change its state.
+```
+public class StringCopyExample   {     
+	public static void main(String argvs[])   
+	{  
+	String obj1 = new String("JavaTpoint is a very good site.");  
+	String obj2 = obj1;                                               ...copy object referance
+	System.out.println("The hash code of obj1 is: " + obj1.hashCode());
+	System.out.println("The hash code of obj2 is: " + obj2.hashCode());
+
+	obj2 = "JavaTpoint is very good.";  
+  
+	System.out.println("The hash code is: " + obj1.hashCode());    .... both objects have different hashcode and corresponding string values as well
+	System.out.println("The string is: " + obj1 + "\n");  
+  
+	System.out.println("The hash code is: " + obj2.hashCode());  
+	System.out.println("The string is: " + obj2);  
+	}  
+}
+
+****************Output**********************************************************
+The hash code is: -2026030341
+The hash code is: -2026030341
+The hash code is: -2026030341
+The string is: JavaTpoint is a very good site.
+
+The hash code is: 1724527163
+The string is: JavaTpoint is very good.
+
 ```
 
 
