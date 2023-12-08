@@ -103,3 +103,41 @@ list.stream()
 		 
 ```
 
+## 9. Seperate Odd and Even Number From List [ use COllectors.partitioningBy(Predicate) ]
+```
+List<Integer> listOfIntegers = Arrays.asList(71, 18, 42, 21, 67, 32, 95, 14, 56, 87);
+
+		listOfIntegers.stream()
+		.collect(Collectors.partitioningBy(i->i%2==0))
+		.entrySet()
+		.forEach(s->System.out.println(
+				(s.getKey().equals(true)?"even = ":"odd = ")
+				+s.getValue()));
+```
+
+## 10. Swap Two String without third string
+```
+String a = "abc";
+String b = "def";
+
+a = a.concat(b);                                        //...abcdef
+b = a.substring(0, a.length() - b.length());            //.....abc
+a = a.substring(b.length());                           //......def
+
+```
+
+## 11. Remove Repeatating String
+//input - "AA","BB","CC","AA"
+//output - BB, CC
+
+```
+List<String> listOfString = new ArrayList<String>(Arrays.asList("AA","BB","CC","AA"));		
+listOfString =  listOfString.stream()
+		.collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+		.entrySet()
+		.stream()
+		.filter(e->e.getValue()==1)
+		.map(e->e.getKey())
+		.collect(Collectors.toList());
+```
+## 12. 
