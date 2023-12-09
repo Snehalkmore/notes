@@ -6,4 +6,8 @@
 ## Abstract Factory 
 ![abstractFactory](https://github.com/Snehalkmore/notes/assets/14993594/f45c69b2-409c-48c8-8f1c-0116a393fb39)
 
+## prototype
+  use clone method to create cloned object
+
+
 
