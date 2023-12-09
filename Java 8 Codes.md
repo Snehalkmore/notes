@@ -324,4 +324,18 @@ List<String> listOfStrings = Arrays.asList("Facebook", "Twitter", "YouTube", "Wh
 					);
 ```
 
+## From inputed list of strings, find strings starting with "aa" and within those filtered strings find out the unique character count
+
+```
+List<String> list = Arrays.asList("aaryanna", "aayanna", "airianna",
+				"alassandra", "allanna", "allannah", "allessandra", "allianna",
+				"allyanna", "anastaisa", "anastashia", "anastasia",
+				"annabella", "annabelle", "annebelle");
+list.stream()
+		.filter(s->s.startsWith("aa"))
+		.collect(Collectors.groupingBy(Function.identity(),
+				Collectors.flatMapping(t->Stream.of(t.toString().split("")),Collectors.toSet())))
+		.entrySet().stream().forEach(s->System.out.println(s.getKey()+" "+s.getValue().size()));;
+	
+```
 
