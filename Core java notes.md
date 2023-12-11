@@ -26,7 +26,7 @@ public class demo {
 }
 ```
 
-### Overring & overloading in java ?
+### Overriding & overloading in java ?
 #### Overrriding -
     1. Run-time polymorphism is also known as dynamic or late binding polymorphism.
     2. Occurs between superclass and subclass
@@ -48,7 +48,7 @@ if a subclass defines a static method with the same signature as a static method
 
 
 1. If o1.equals(o2), then o1.hashCode() == o2.hashCode() should always be true.
-2. If o1.hashCode() == o2.hashCode is true, it doesn’t mean that o1.equals(o2) will be true.
+2. If o1.hashCode() == o2.hashCode() is true, it doesn’t mean that o1.equals(o2) will be true.
 ```
 
 ### Exception chaining
@@ -63,6 +63,11 @@ if a subclass defines a static method with the same signature as a static method
    7.1 parent(Ioexception)->child(FileNotFoundException)-working
    7.2 parent(fileNotFoundException)->child(IOException)-not working
 ```
+![image](https://github.com/Snehalkmore/notes/assets/14993594/e61ecb0c-145c-4cc7-bc13-f87e6d73428b)
+
+
+
+
 
 ### Access Modifiers
 ```
@@ -73,10 +78,12 @@ if a subclass defines a static method with the same signature as a static method
 ```
 
 ### what is marker interface in java can you give some examples of marker interfaces in java ? 
+Marker interface does not have any abstract method. but by implementing these interface, JVM get to know the functionality to be performed.
 ```
 1. Clonnable
 2. Serializable
 3. Remote Interface
+4. RandomAccess
 ```
 
 ### Internal working of hashmap?
@@ -84,6 +91,11 @@ if a subclass defines a static method with the same signature as a static method
 
 ### How to clone object and diff between Shallow and Deep clone
 1. We need to implement marker interface Clonable to achieve the cloning and We need to override the clone method from Object class to achieve cloning
+```
+ public Object clone() throws CloneNotSupportedException { 
+        return super.clone(); 
+    } 
+```
 2. Shallow Copy - When we do copy of some entity to create two objects, but if we change state of one object, then it should get reflected in other object, then this process is called shallow copy
 ```
 class ABC  
@@ -269,6 +281,76 @@ The string is: JavaTpoint is very good.
 
 ```
 
+Custom immutable class
+```
+import java.util.HashMap;
+import java.util.Iterator;
+
+public final class FinalClassExample {
+	private final int id;
+	private final String name;
+	private final HashMap<String,String> testMap;
+
+	public int getId() {return id;}
+
+	public String getName() {return name;}
+
+	// Getter function for mutable objects
+	public HashMap<String, String> getTestMap() {
+		return (HashMap<String, String>) testMap.clone();  // clone the exisitng object
+	}
+
+	// Constructor method performing deep copy
+	
+	public FinalClassExample(int i, String n, HashMap<String,String> hm){
+		System.out.println("Performing Deep Copy for Object initialization");
+		// "this" keyword refers to the current object
+		this.id=i;
+		this.name=n;
+
+		HashMap<String,String> tempMap=new HashMap<String,String>();   // temp new map
+		String key;
+		Iterator<String> it = hm.keySet().iterator();
+		while(it.hasNext()){
+			key=it.next();
+			tempMap.put(key, hm.get(key));
+		}
+		this.testMap=tempMap;                                      //assign temp map to this
+	}
+
+	public static void main(String[] args) {
+		HashMap<String, String> h1 = new HashMap<String,String>();
+		h1.put("1", "first");
+		h1.put("2", "second");
+		String s = "original";
+		int i=10;
+		
+		FinalClassExample ce = new FinalClassExample(i,s,h1);
+		
+		System.out.println("ce id: "+ce.getId());
+		System.out.println("ce name: "+ce.getName());
+		System.out.println("ce testMap: "+ce.getTestMap());
+
+		// change the local variable values
+		i=20;
+		s="modified";
+		h1.put("3", "third");
+
+		// print the values again
+		System.out.println("ce id after local variable change: "+ce.getId());
+		System.out.println("ce name after local variable change: "+ce.getName());
+		System.out.println("ce testMap after local variable change: "+ce.getTestMap());
+		
+		HashMap<String, String> hmTest = ce.getTestMap();
+		hmTest.put("4", "new");
+		
+		System.out.println("ce testMap after changing variable from getter methods: "+ce.getTestMap());
+
+	}
+
+}
+```
+
 
 ### Concept of serializable? When you don’t use serializable then what kind of exception you face.
 
@@ -281,20 +363,28 @@ The argument for the NotSerializableException is the name of the class.
 
 ### String vs StringBuilder vs StringBuffer
 
-String is immutable whereas StringBuffer and StringBuilder are mutable classes.
-StringBuffer is thread-safe and synchronized whereas StringBuilder is not. That’s why StringBuilder is faster than StringBuffer.
-String concatenation operator (+) internally uses StringBuffer or StringBuilder class.
-For String manipulations in a non-multi threaded environment, we should use StringBuilder else use StringBuffer class.
+1. String is immutable whereas StringBuffer and StringBuilder are mutable classes.
+2. StringBuffer is thread-safe and synchronized whereas StringBuilder is not. That’s why StringBuilder is faster than StringBuffer.
+3. String concatenation operator (+) internally uses StringBuffer or StringBuilder class.
+4. For String manipulations in a non-multi threaded environment, we should use StringBuilder else use StringBuffer class.
+
+
 
 ### inner class create seperate .class file
 
+
+
 ### how overriding internally works?
 ava tooling, interestingly, optionally allows use of the @Override attribute on interface methods. By default it is not allowed. But when enabled, will generate a warning or error when a method does not override an existing base class method or interface method.
+
+
 
 ### How many classloader exists in jvm
 1. Bootstrap Class Loader – It loads JDK internal classes. It loads rt.jar and other core classes for example java.lang.* package classes.
 2. Extensions Class Loader – It loads classes from the JDK extensions directory, usually $JAVA_HOME/lib/ext directory.
 3. System Class Loader – This classloader loads classes from the current classpath. We can set classpath while invoking a program using -cp or -classpath command line option.
+
+
 
 ### System.out.println() in Java
 Where System is the class name, it is declared as final. The out is an instance of the System class and is of type PrintStream. Its access specifiers are public and final. It is an instance of "java.io.PrintStream". When we call the member, a PrintStream class object creates internally.
