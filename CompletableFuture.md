@@ -22,8 +22,8 @@ CompletableFuture<String> CompletableFuture = new CompletableFuture<String>();
 ```
 
 ### Methods from 
-1. supplyAsync(): It complete its job asynchronously. The result of supplier is run by a task from ForkJoinPool.commonPool() as default. The supplyAsync() method returns CompletableFuture on which we can apply other methods.
-2. thenApply(): The method accepts function as an arguments. It returns a new CompletableStage when this stage completes normally. The new stage use as the argument to the supplied function.
+1. supplyAsync(): It complete its job asynchronously. The result of SUPLIER interface is run by a task from ForkJoinPool.commonPool() as default. The supplyAsync() method returns CompletableFuture on which we can apply other methods.
+2. thenApply(): The method accepts Function as an arguments. It returns a new CompletableStage when this stage completes normally. The new stage use as the argument to the supplied function.
 3. join(): the method returns the result value when complete. It also throws a CompletionException (unchecked exception) if completed exceptionally.
 
 ```
