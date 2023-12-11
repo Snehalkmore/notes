@@ -16,6 +16,7 @@ A Future is used for asynchronous Programming. It provides two methods, isDone()
 3. Future has not any exception handling.
 4. We cannot combine multiple futures.
 
+Syntax
 ```
 CompletableFuture<String> CompletableFuture = new CompletableFuture<String>();  
 ```
