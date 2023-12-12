@@ -4,6 +4,9 @@
 <img width="484" alt="image" src="https://github.com/Snehalkmore/notes/assets/14993594/ecb193af-c8ff-4f14-985e-fb83ecee91a4">
 
 
+## SaveAndFlush 
+when our business logic needs to read the saved changes at a later point during the same transaction, but before the commit.
+
 ## JPA FIND Query
 ```
 public interface StudentRepo implements JpaRepository<customCLass,int>{
