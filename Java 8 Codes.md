@@ -338,4 +338,19 @@ list.stream()
 		.entrySet().stream().forEach(s->System.out.println(s.getKey()+" "+s.getValue().size()));;
 	
 ```
+## Find map where key- department name, value -sum of salary of each department
+```
+List<Employee> list = Arrays.asList(new Employee("SM",2000,"IT"),
+				new Employee("AM",2000,"CSC"),
+				new Employee("LM",2000,"CSC"),
+				new Employee("PM",2000,"IT"),
+				new Employee("BM",2000,"IT"),
+				new Employee("KM",2000,"Civil")
+				);
+		
+		//get map key- department name, value -sum of salary of each department
+		
+		Map<String,Integer> map = list.stream()
+		.collect(Collectors.groupingBy(Employee::getDepartment,Collectors.summingInt(Employee::getSalary)));
 
+```
