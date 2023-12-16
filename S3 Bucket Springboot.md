@@ -1,16 +1,40 @@
 ## S3 Property config
 ```
-
+accessKey=
+secret=
+region=
+bucketName=
 ```
 
 ## S3 COnfiguration
 ```
+    @Value("${accessKey}")
+    private String accessKey;
+
+    @Value("${secret}")
+    private String secret;
+
+    @Value("${region}")
+    private String region;
+
+    @Bean
+    public AmazonS3 s3(){
+        AWSCredentials awsCredentials=new BasicAWSCredentials(accessKey,secret);
+        return AmazonS3ClientBuilder.standard().withRegion(region)
+            .withCredentials(newAWSStaticCredentialsProvider(awsCredentials)).build();
+    }
 ```
 
 ## S3 Operation
 
 ### File save
 ```
+    @Value("${bucketName}")
+    private String bucketName;
+
+    @Autowired
+    private  final AmazonS3 s3;
+ 
     public String saveFile(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
         int count = 0;
