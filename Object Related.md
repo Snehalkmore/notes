@@ -86,3 +86,5 @@ GFG r = constructor.newInstance();
  r.setName("GeeksForGeeks"); 
 ```
 
+## How are Java objects stored in memory?
+
