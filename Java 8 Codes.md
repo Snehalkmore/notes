@@ -273,9 +273,12 @@ List maximum3Numbers = listOfIntegers.stream()
 ## 23. Fibbonacci series till n number
 ```
 \\java 8
-Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
-		.limit(10)
-		.forEach(x -> System.out.println("{" + x[0] + "," + x[1] + "}"));
+String collect = Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
+                .limit(10)
+                .map(t -> t[0])
+                .map(String::valueOf)     // convert to string
+                .collect(Collectors.joining(", "));
+System.out.println("Result : " + collect);
 
 \\ first approach
 public static int iterativeFibonacci(int number) {
