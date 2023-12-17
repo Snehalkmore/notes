@@ -84,3 +84,19 @@ salaries.put("Samuel", 50000);
 salaries.replaceAll((name, oldValue) -> 
   name.equals("Freddy") ? oldValue : oldValue + 10000);
 ```
+
+
+## UnaryOperator
+List.replaceAll method uses UnaryOperator
+```
+List<String> names = Arrays.asList("bob", "josh", "megan");
+names.replaceAll(String::toUpperCase);
+```
+
+## Binary Operator
+```
+List<Integer> values = Arrays.asList(3, 5, 8, 9, 12);
+
+int sum = values.stream()
+  .reduce(0, (i1, i2) -> i1 + i2);
+```
