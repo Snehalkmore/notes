@@ -1,4 +1,8 @@
 # @FunctionInterface
+some of the examplese of function interface are:
+1. Callable ->call method
+2. Runnable ->run method
+3. Comparator ->compare method
 
 ## 1. Function<T, R>
 ```
