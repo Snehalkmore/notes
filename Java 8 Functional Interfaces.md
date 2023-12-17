@@ -58,6 +58,8 @@ Supplier < LocalDateTime > supplier = () -> LocalDateTime.now();
 System.out.println(supplier.get());
 ```
 
+
+
 ## 5. BiFunction<T, U, R>
 ```
 public interface BiFunction<T, U, R> {
@@ -68,4 +70,17 @@ example
 ```
 BiFunction < Integer, Integer, Integer > multiplication = (t, u) -> (t * u);
 System.out.println(multiplication.apply(200, 100));
+```
+
+### BiFunction used in Map.replaceAll method
+One of the typical examples of using this interface in the standard API is in the Map.replaceAll method, which allows replacing all values in a map with some computed value.
+Let’s use a BiFunction implementation that receives a key and an old value to calculate a new value for the salary and return it.
+```
+Map<String, Integer> salaries = new HashMap<>();
+salaries.put("John", 40000);
+salaries.put("Freddy", 30000);
+salaries.put("Samuel", 50000);
+
+salaries.replaceAll((name, oldValue) -> 
+  name.equals("Freddy") ? oldValue : oldValue + 10000);
 ```
