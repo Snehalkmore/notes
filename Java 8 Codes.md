@@ -140,7 +140,7 @@ listOfString =  listOfString.stream()
 		.map(e->e.getKey())
 		.collect(Collectors.toList());
 ```
-## 12. Remove Duplicate Elements From List/ Get unique element list
+## 12. Get Distinct Elements From List/ Get unique element list
 ```
  List<String> listOfStrings = Arrays.asList("Java", "Python", "C#", "Java", "Kotlin", "Python");
 	
