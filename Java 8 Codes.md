@@ -362,3 +362,15 @@ List<Employee> list = Arrays.asList(new Employee("SM",2000,"IT"),
 		.collect(Collectors.groupingBy(Employee::getDepartment,Collectors.summingInt(Employee::getSalary)));
 
 ```
+
+## 
+```
+List<Student> students = Arrays.asList(new Student(1,Arrays.asList(new Mark(20,30))),
+				new Student(2,Arrays.asList(new Mark(50,30))));
+
+students.stream().forEach(s->{
+				int summ = s.getMarks().stream().mapToInt(m->m.getMark1()+m.getMark2()).sum();
+				System.out.println(s.getId() + " "+summ);
+			});
+		
+```
