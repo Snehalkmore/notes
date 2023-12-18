@@ -92,7 +92,7 @@ p.v. saveAddr(args){
 
 
 ### 5. NOT_SUPPORTED
-1. If current transaction exists, it get suspended and business logic executed with transaction. 
+1. If current transaction exists, it get suspended and business logic executed without transaction. 
 2. The transaction will atuomicatically get resumed at the end.
 3. After transaction resumed, either it can be rolled back or committed.
 4. if RuntimeException thrown by  child() method, and it get propogated to parent() method and this logical transaction get rolled back.
