@@ -113,6 +113,18 @@ List<Integer> listOfIntegers = Arrays.asList(71, 18, 42, 21, 67, 32, 95, 14, 56,
 		.forEach(s->System.out.println(
 				(s.getKey().equals(true)?"even = ":"odd = ")
 				+s.getValue()));
+
+
+// collect in seperate list
+Map<Boolean,List<Integer>> map1 =listOfIntegers.stream()
+		.collect(Collectors.partitioningBy(i->i%2==0));
+		
+List<Integer> even = map1.get(true).stream().collect(Collectors.toList());
+System.out.println("even : "+even);
+		
+List<Integer> odd = map1.get(false).stream().collect(Collectors.toList());
+System.out.println("odd : "+odd);
+		
 ```
 
 ## 10. Swap Two String without third string
