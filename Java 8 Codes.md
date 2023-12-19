@@ -374,3 +374,6 @@ students.stream().forEach(s->{
 			});
 		
 ```
+
+https://mkyong.com/java8/java-8-flatmap-example/
+https://www.java67.com/2016/03/how-to-use-flatmap-in-java-8-stream.html
