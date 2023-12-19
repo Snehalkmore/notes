@@ -1,6 +1,6 @@
 
 
-## ROW_NUMBER function in windows
+## ROW_NUMBER function in windows (https://learnsql.com/blog/row-number-over-in-sql/)
 used to get unique id for each row
 ```
 SELECT
