@@ -31,7 +31,7 @@ Class d = c.clone();
 
 Deserialize
 try { 
-            GFG d; 
+            DeserializationExample d; 
             FileInputStream f  = new FileInputStream("file.txt"); 
             ObjectInputStream oos  = new ObjectInputStream(f); 
             d = (DeserializationExample)oos.readObject(); 
