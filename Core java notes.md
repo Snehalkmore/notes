@@ -364,7 +364,7 @@ The argument for the NotSerializableException is the name of the class.
 ### String vs StringBuilder vs StringBuffer
 
 1. String is immutable whereas StringBuffer and StringBuilder are mutable classes.
-2. StringBuffer is thread-safe and synchronized whereas StringBuilder is not. That’s why StringBuilder is faster than StringBuffer.
+2. StringBuffer is thread-safe and all methods in it are synchronized whereas StringBuilder is not. That’s why StringBuilder is faster than StringBuffer.
 3. String concatenation operator (+) internally uses StringBuffer or StringBuilder class.
 4. For String manipulations in a non-multi threaded environment, we should use StringBuilder else use StringBuffer class.
 
