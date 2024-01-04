@@ -6,12 +6,13 @@ Before we look at how to write the join itself, let's look at what the result of
 Let's take for example a system that stores information about users and their addresses.
 
 The rows from the table that stores user information might look like this:
-
+```
  id |     name     |        email        | age
 ----+--------------+---------------------+-----
   1 | John Smith   | johnsmith@gmail.com |  25
   2 | Jane Doe     | janedoe@Gmail.com   |  28
   3 | Xavier Wills | xavier@wills.io     |  3
+```
 ...
 (7 rows)
 And the rows from the table that stores address information might look like this:
