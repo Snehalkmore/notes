@@ -16,24 +16,26 @@ The rows from the table that stores user information might look like this:
 ...
 (7 rows)
 And the rows from the table that stores address information might look like this:
-
+```
  id |      street       |     city      | state | user_id
 ----+-------------------+---------------+-------+---------
   1 | 1234 Main Street  | Oklahoma City | OK    |       1
   2 | 4444 Broadway Ave | Oklahoma City | OK    |       2
   3 | 5678 Party Ln     | Tulsa         | OK    |       3
+```
 (3 rows)
 We could write separate queries to retrieve both the user information and the address information—but ideally we could write one query and receive all of the users and their addresses in the same result set.
 
 This is exactly what a join lets us do!
 
 We'll look at how to write these joins soon, but if we joined our user information to our address information we could get a result like this:
-
+```
  id |     name     |        email        | age | id |      street       |     city      | state | user_id
 ----+--------------+---------------------+-----+----+-------------------+---------------+-------+---------
   1 | John Smith   | johnsmith@gmail.com |  25 |  1 | 1234 Main Street  | Oklahoma City | OK    |       1
   2 | Jane Doe     | janedoe@Gmail.com   |  28 |  2 | 4444 Broadway Ave | Oklahoma City | OK    |       2
   3 | Xavier Wills | xavier@wills.io     |  35 |  3 | 5678 Party Ln     | Tulsa         | OK    |       3
+```
 (3 rows)
 Here we see all of our users and their addresses in one nice result set.
 
@@ -49,10 +51,11 @@ The simplest kind of join we can do is a CROSS JOIN or "Cartesian product."
 This join takes each row from one table and joins it with each row of the other table.
 
 If we had two lists—one containing 1, 2, 3 and the other containing A, B, C—the Cartesian product of those two lists would be this:
-
+```
 1A, 1B, 1C
 2A, 2B, 2C
 3A, 3B, 3C
+```
 Each value from the first list is paired with each value of the second list.
 Let's write this same example as a SQL query.
 
@@ -78,7 +81,7 @@ SELECT *
 FROM letters
 CROSS JOIN numbers;
 ```
-
+```
  letter | number
 --------+--------
  A      | 1
@@ -91,7 +94,7 @@ CROSS JOIN numbers;
  C      | 2
  C      | 3
 (9 rows)
-
+```
 This is the simplest type of join we can do—but even in this simple example we can see the join at work: the two separate rows (one from letters and one from numbers) have been joined together to form one row.
 
 While this type of join is often discussed as a mere academic example, it does have at least one good use case: covering date ranges.
@@ -117,7 +120,7 @@ The third parameter is the "step interval"—or how much we want to increment th
 Putting it all together, this generates a series of dates starting five days ago, ending today, and going one day at a time.
 Finally we remove the time portion by casting the output of these values to a date using ::DATE, and we alias this column using AS day to make the output a little nicer.
 The output of this query is the past five days plus today:
-
+```
     day
 ------------
  2020-08-19
@@ -127,6 +130,7 @@ The output of this query is the past five days plus today:
  2020-08-23
  2020-08-24
 (6 rows)
+```
 Going back to our tasks-per-day example, let's create a simple table to hold the tasks we want to complete and insert a few tasks:
 
 ```
@@ -160,7 +164,7 @@ CROSS JOIN
 (Since our date generation query is not an actual table we just write it as a subquery.)
 
 From this query we return the task name and the day, and the result set looks like this:
-
+```
      name      |    day
 ---------------+------------
  Brush teeth   | 2020-08-19
@@ -174,6 +178,7 @@ From this query we return the task name and the day, and the result set looks li
  Eat breakfast | 2020-08-21
  Eat breakfast | 2020-08-22
  ...
+```
  (24 rows)
 Like we expected, we get a row for each task for every day in our date range.
 
@@ -234,7 +239,7 @@ FULL OUTER JOIN directors
 Notice the join condition we specified that matches the movie to its director: ON movies.director_id = directors.id.
 
 Our result set looks like an odd Cartesian product of sorts:
-
+```
   id  |  name   | director_id |  id  |     name
 ------+---------+-------------+------+--------------
     1 | Movie 1 |           1 |    1 | John Smith
@@ -246,6 +251,7 @@ Our result set looks like an odd Cartesian product of sorts:
  NULL | NULL    |        NULL |    4 | Bev Scott
  NULL | NULL    |        NULL |    3 | Xavier Wills
 (8 rows)
+```
 The first rows we see are ones where the movie had a director, and our join condition evaluated to true.
 
 However, after those rows we see each of the remaining rows from each table—but with NULL values where the other table didn't have a match.
@@ -269,13 +275,14 @@ INNER JOIN directors
   ON directors.id = movies.director_id;
 Our result shows the three movies that have a director:
 ```
-
+```
  id |  name   | director_id | id |    name
 ----+---------+-------------+----+------------
   1 | Movie 1 |           1 |  1 | John Smith
   2 | Movie 2 |           1 |  1 | John Smith
   3 | Movie 3 |           2 |  2 | Jane Doe
 (3 rows)
+```
 Since an inner join only includes rows that match the join condition, the order of the two tables in the join don't matter.
 
 If we reverse the order of the tables in the query we get same result:
@@ -285,11 +292,13 @@ FROM directors
 INNER JOIN movies
   ON movies.director_id = directors.id;
  ```
+```
  id |    name    | id |  name   | director_id
 ----+------------+----+---------+-------------
   1 | John Smith |  1 | Movie 1 |           1
   1 | John Smith |  2 | Movie 2 |           1
   2 | Jane Doe   |  3 | Movie 3 |           2
+```
 (3 rows)
 Since we listed the directors table first in this query and we selected all columns (SELECT *), we see the directors column data first and then the columns from movies—but the resulting data is the same.
 This is a useful property of inner joins, but it's not true for all join types—like our next type.
@@ -324,7 +333,7 @@ A left join returns all records from the "left" table.
 A left join returns any rows from the "right" table that match the join condition.
 
 Rows from the "right" table that don't match the join condition are returned as NULL.
-
+```
  id |  name   | director_id |  id  |    name
 ----+---------+-------------+------+------------
   1 | Movie 1 |           1 |    1 | John Smith
@@ -333,6 +342,7 @@ Rows from the "right" table that don't match the join condition are returned as 
   4 | Movie 4 |        NULL | NULL | NULL
   5 | Movie 5 |        NULL | NULL | NULL
 (5 rows)
+```
 Looking at that result set, we can see why this type of join is useful for "all of this and, if it exists, some of that" type queries.
 
 
@@ -350,6 +360,7 @@ FROM movies
 RIGHT JOIN directors
   ON directors.id = movies.director_id;
 ```
+```
   id  |  name   | director_id | id |     name
 ------+---------+-------------+----+--------------
     1 | Movie 1 |           1 |  1 | John Smith
@@ -359,6 +370,7 @@ RIGHT JOIN directors
  NULL | NULL    |        NULL |  4 | Bev Scott
  NULL | NULL    |        NULL |  3 | Xavier Wills
 (6 rows)
+```
 Our result set now returns every directors row and, if it exists, the movies data.
 
 All we've done is switch which table we're considering the "primary" one—the table we want to see all of the data from regardless of if its associated data exists.
@@ -376,11 +388,12 @@ In practice, I don't think I've ever even seen a RIGHT JOIN in a production appl
 Re-writing RIGHT JOIN
 If we wanted to flip our scenario above and instead return all directors and conditionally their movies, we can easily re-write the RIGHT JOIN into a LEFT JOIN.
 All we need to do is flip the order of the tables in the query, and change RIGHT to LEFT:
-
+```
 SELECT *
 FROM directors
 LEFT JOIN movies
   ON movies.director_id = directors.id;
+```
 Note: I like to put the table that is being joined on (the "right" table—in the example above movies) first in the join condition (ON movies.director_id = ...)—but that's just my personal preference.
 Filtering using LEFT JOIN
 
@@ -400,7 +413,7 @@ LEFT JOIN movies
   ON movies.director_id = directors.id;
   ```
 For a director that doesn't belong to a movie, the columns from the movies table are NULL:
-
+```
  id |     name     |  id  |  name   | director_id
 ----+--------------+------+---------+-------------
   1 | John Smith   |    1 | Movie 1 |           1
@@ -410,6 +423,7 @@ For a director that doesn't belong to a movie, the columns from the movies table
   4 | Bev Scott    | NULL | NULL    |        NULL
   3 | Xavier Wills | NULL | NULL    |        NULL
 (6 rows)
+```
 In our example, director ID 3, 4, and 5 don't belong to a movie.
 
 To filter our result set just to these rows, we can add a WHERE clause to only return rows where the movie data is NULL:
@@ -420,13 +434,15 @@ LEFT JOIN movies
   ON movies.director_id = directors.id
 WHERE movies.id IS NULL;
 ```
-
+```
  id |     name     |  id  | name | director_id
 ----+--------------+------+------+-------------
   5 | Bree Jensen  | NULL | NULL |        NULL
   4 | Bev Scott    | NULL | NULL |        NULL
   3 | Xavier Wills | NULL | NULL |        NULL
 (3 rows)
+```
+
 And there are our three movie-less directors!
 
 It's common to use the id column of the table to filter against (WHERE movies.id IS NULL), but all columns from the movies table are NULL—so any of them would work.
@@ -446,12 +462,14 @@ LEFT JOIN movies
   ON movies.director_id = directors.id
 WHERE movies.id IS NOT NULL;
 ```
+```
  id |    name    | id |  name   | director_id
 ----+------------+----+---------+-------------
   1 | John Smith |  1 | Movie 1 |           1
   1 | John Smith |  2 | Movie 2 |           1
   2 | Jane Doe   |  3 | Movie 3 |           2
 (3 rows)
+```
 This may seem handy, but we've actually just re-implemented INNER JOIN!
 
 
@@ -486,13 +504,14 @@ Since these are inner joins, the order in which we write the joins doesn't matte
 It again comes down to what you're trying to query and what makes the query the most understandable.
 
 In our result set, we'll notice that we've further narrowed down the rows that are returned:
-
+```
  id |    name    | id |  name   | director_id | id | movie_id
 ----+------------+----+---------+-------------+----+----------
   1 | John Smith |  1 | Movie 1 |           1 |  1 |        1
   1 | John Smith |  1 | Movie 1 |           1 |  2 |        1
   2 | Jane Doe   |  3 | Movie 3 |           2 |  3 |        3
 (3 rows)
+```
 This makes sense because we've added another INNER JOIN. In effect this adds another "AND" condition to our query.
 
 Our query essentially says: "return all directors that belong to movies that also have ticket sales."
@@ -507,7 +526,7 @@ LEFT JOIN tickets
   ON tickets.movie_id = movies.id;
 ```
 We can see that Movie 2 is now back in the result set:
-
+```
  id |    name    | id |  name   | director_id |  id  | movie_id
 ----+------------+----+---------+-------------+------+----------
   1 | John Smith |  1 | Movie 1 |           1 |    1 |        1
@@ -515,6 +534,7 @@ We can see that Movie 2 is now back in the result set:
   2 | Jane Doe   |  3 | Movie 3 |           2 |    3 |        3
   1 | John Smith |  2 | Movie 2 |           1 | NULL |     NULL
 (4 rows)
+```
 This movie didn't have any ticket sales, so it was previously excluded from the result set due to the INNER JOIN.
 
 I'll leave this an Exercise For The Reader™, but how would you find directors that belong to movies that don't have any ticket sales?
